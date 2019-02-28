@@ -1,0 +1,46 @@
+import turtle  # 引入决解问题需要的工具——turtle作图包
+
+
+# 定义turtle画笔和画布的参数
+def huabi():
+#    turtle.screensize(800, 600, "green")
+    turtle.speed(0)  # speed()参数有[0,10]：“0”特殊、代表最快速度，其余[1,10]值越大、速度越快
+    turtle.pensize(2)  # 设置画笔宽度为2
+#    turtle.pencolor("red")
+    turtle.setup(800, 800, 100,
+                 10)  # setup()参数有4个：前两个代表画布的“宽”和“高”，当数值为整数时、表示绝对像素大小，当小数时、表示站屏幕的比例。后两个可以省略，默认为屏幕中心位置，代表距离“屏幕左上角”的距离，单位是像素密度，
+    turtle.penup()  # 抬起画笔，之后的画笔动作、就不会产生图线
+    turtle.goto(-300, 100)  # 以画布中心点为坐标原点(0,0)，将画笔移动到坐标(-300,100)处
+    turtle.pendown()  # 落下画笔，以便画图
+
+
+# 定义“尖”
+def koch(size, n):
+    if n == 0:  # 0阶的科赫雪花曲线就是一条线，大小为输入的“size”
+        turtle.fd(size)
+    else:  # 高阶科赫雪花曲线
+        for i in [0, 60, -120, 60]:  # turtle在“尖”的四条线上改变的角度，分别为0°，60°，-129°，60°
+            turtle.left(i)  # 对应上边四个角度，一共需要转4次弯，画出本阶的四条线，
+            koch(size / 3, n - 1)  # 每个角度下的一个边，对应低一阶的客户雪花曲线的“尖”；至此完成函数本身的循环和复用，自动画出一个完整的n阶“尖”
+
+
+# 定义“边”
+def sdkoch(size, n):  # 完整的科赫雪花曲线由3个“边”组成，我们以上完成的是一个由“尖”组成的“边”，
+    koch(size, n)
+    turtle.right(120)  # 2行代码一组，
+    koch(size, n)
+    turtle.right(120)
+    koch(size, n)  # 至此，得到完整的n阶科赫雪花曲线
+    turtle.hideturtle()  # 把turtle的光标隐藏
+    turtle.done()  # 结束turtle
+
+
+# 定义main()主函数
+def main(size, n):  # 设定参数接口
+    huabi()
+    sdkoch(size, n)
+
+main(500, 2)  # 在设定参数之后，调用主函数
+
+
+
